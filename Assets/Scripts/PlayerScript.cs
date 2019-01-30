@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float padding = 1f;
-    [SerializeField] GameObject laserPrefab;
+    [SerializeField] GameObject laserPrefab = null;
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileFiringPeriod = 0.1f;
 
