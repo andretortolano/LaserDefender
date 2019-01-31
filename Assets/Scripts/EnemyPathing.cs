@@ -4,27 +4,23 @@ using UnityEngine;
 
 public class EnemyPathing : MonoBehaviour
 {
-    [SerializeField] WaveConfig waveConfig = null;
-    GameObject path = null; // REMOVE
-    [SerializeField] float moveSpeed = 2f;
+    WaveConfig waveConfig = null;
 
     List<Transform> pathWaypoints = new List<Transform>();
 
     int waypointIndex = 0;
 
+    public void SetWaveConfig(WaveConfig waveConfig)
+    {
+        this.waveConfig = waveConfig;
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
         pathWaypoints = waveConfig.getWayPoints();
-        //foreach (Transform t in path.GetComponentInChildren<Transform>()) {
-        //    pathWaypoints.Add(t);
-        //}
-
         transform.position = pathWaypoints[waypointIndex].transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
@@ -35,7 +31,7 @@ public class EnemyPathing : MonoBehaviour
         if (waypointIndex <= pathWaypoints.Count - 1)
         {
             var targetPosition = pathWaypoints[waypointIndex].transform.position;
-            var movementThisFrame = moveSpeed * Time.deltaTime;
+            var movementThisFrame = waveConfig.getMoveSpeed() * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementThisFrame);
 
             if (transform.position == targetPosition)
