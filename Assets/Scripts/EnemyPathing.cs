@@ -17,13 +17,18 @@ public class EnemyPathing : MonoBehaviour
 
     void Start()
     {
-        pathWaypoints = waveConfig.getWayPoints();
-        transform.position = pathWaypoints[waypointIndex].transform.position;
+        if (waveConfig != null) {
+            pathWaypoints = waveConfig.getWayPoints();
+            transform.position = pathWaypoints[waypointIndex].transform.position;
+        }
     }
 
     void Update()
     {
-        Move();
+        if (waveConfig != null)
+        {
+            Move();
+        }
     }
 
     private void Move()
