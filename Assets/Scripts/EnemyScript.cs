@@ -8,6 +8,12 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float maxTimeBetweenShots = 3;
     [SerializeField] GameObject projectile = null;
     [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] GameObject deathVFX = null;
+    [SerializeField] float deathVFXDuration = 1f;
+    [SerializeField] AudioClip deathSFX = null;
+    [SerializeField] [Range(0, 1)] float deathSFXVolume = 0.5f;
+    [SerializeField] AudioClip shootSFX = null;
+    [SerializeField] [Range(0, 1)] float shootSFXVolume = 0.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +44,10 @@ public class EnemyScript : MonoBehaviour
     {
         var laser = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
         laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -projectileSpeed);
+        if (shootSFX != null)
+        {
+            AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position, shootSFXVolume);
+        }
         ResetShotCounter();
     }
 
@@ -56,5 +66,13 @@ public class EnemyScript : MonoBehaviour
 
     private void DestroyEnemy() {
         Destroy(gameObject);
+        if (deathVFX != null) {
+            GameObject explostion = Instantiate(deathVFX, transform.position, transform.rotation);
+            Destroy(explostion, deathVFXDuration);
+        }
+
+        if (deathSFX != null) {
+            AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSFXVolume);
+        }
     }
 }
